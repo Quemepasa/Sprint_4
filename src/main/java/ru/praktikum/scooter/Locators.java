@@ -1,7 +1,5 @@
 package ru.praktikum.scooter;
 
-import org.openqa.selenium.By;
-
 public class Locators {
     // Кнопка "Сколько это стоит? И как оплатить?"
     // By.xpath(".//div[contains(text(),'Сколько это стоит')]");

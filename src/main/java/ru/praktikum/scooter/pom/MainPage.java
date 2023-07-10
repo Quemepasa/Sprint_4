@@ -6,10 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static ru.praktikum.scooter.constants.Urls.MAIN_PAGE_URL;
+
 public class MainPage {
     private final WebDriver driver;
 
-    private final String url = "https://qa-scooter.praktikum-services.ru";
     private final By costQuestionButton = By.xpath(".//div[contains(text(),'Сколько это стоит')]");
     private final By costAnswerDescription = By.xpath(".//p[contains(text(),'Сутки')]");
     private final By severalScootersQuestionButton = By.xpath(".//div[contains(text(),'Хочу')]");
@@ -26,6 +27,8 @@ public class MainPage {
     private final By cancelAnswerDescription = By.xpath(".//p[contains(text(),'пока самокат не привезли')]");
     private final By mkadQuestionButton = By.xpath(".//div[contains(text(),'за МКАДом')]");
     private final By mkadAnswerDescription = By.xpath(".//p[contains(text(),'Всем самокатов')]");
+    private final By orderButtonInHeader = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']");
+    private final By orderButtonAtBottom = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -95,8 +98,16 @@ public class MainPage {
         return mkadAnswerDescription;
     }
 
+    public By getOrderButtonInHeader() {
+        return orderButtonInHeader;
+    }
+
+    public By getOrderButtonAtBottom() {
+        return orderButtonAtBottom;
+    }
+
     public MainPage open() {
-        driver.get(url);
+        driver.get(MAIN_PAGE_URL);
         return this;
     }
 

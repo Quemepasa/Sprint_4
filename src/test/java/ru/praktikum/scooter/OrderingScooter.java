@@ -1,27 +1,23 @@
 package ru.praktikum.scooter;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import ru.praktikum.scooter.pom.*;
+import ru.praktikum.scooter.rules.BrowserRule;
 
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class OrderingScooter {
-    private WebDriver driver;
     private final By orderButtonMainPage;
-    private final String name; // = "Оптимус";
-    private final String surname;// = "Прайм";
-    private final String address;// = "Волоколамское ш., 71, 4";
-    private final String phoneNumber;// = "89999999999";
-    private final String date;// = "21.08.2023";
+    private final String name;
+    private final String surname;
+    private final String address;
+    private final String phoneNumber;
+    private final String date;
 
     public OrderingScooter(By orderButtonMainPage,
                            String name,
@@ -39,28 +35,23 @@ public class OrderingScooter {
 
     @Parameterized.Parameters
     public static Object[][] getPositionOfOrderButton() {
+        BrowserRule browserRule = new BrowserRule();
+        MainPage mainPage = new MainPage(browserRule.getWebDriver());
         return new Object[][]{
-                { By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']"),
-                        "Оптимус", "Прайм", "Волоколамское ш., 71", "89999999999", "21.08.2023"},
-                { By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']"),
-                        "Хали", "Гали", "Ул. Пушкинва, 59", "89112223344", "15.10.2024"},
+                { mainPage.getOrderButtonInHeader(), "Оптимус", "Прайм", "Волоколамское ш., 71", "89999999999", "21.08.2023"},
+                { mainPage.getOrderButtonAtBottom(), "Хали", "Гали", "Ул. Пушкинва, 59", "89112223344", "15.10.2024"},
         };
     }
-
-
-    @Before
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-    }
+    @Rule
+    public final BrowserRule browserRule = new BrowserRule();
 
     @Test
     public void orderScooterWithCorrectData() {
-        MainPage mainPage = new MainPage(driver);
-        CustomerInfoOrderPage customerInfoOrderPage = new CustomerInfoOrderPage(driver);
-        OrderInfoPage orderInfoPage = new OrderInfoPage(driver);
-        СonfirmationModal confirmationModal = new СonfirmationModal(driver);
-        SuccessfulOrderModal successfulOrderModal = new SuccessfulOrderModal(driver);
+        MainPage mainPage = new MainPage(browserRule.getWebDriver());
+        CustomerInfoOrderPage customerInfoOrderPage = new CustomerInfoOrderPage(browserRule.getWebDriver());
+        OrderInfoPage orderInfoPage = new OrderInfoPage(browserRule.getWebDriver());
+        СonfirmationModal confirmationModal = new СonfirmationModal(browserRule.getWebDriver());
+        SuccessfulOrderModal successfulOrderModal = new SuccessfulOrderModal(browserRule.getWebDriver());
 
         mainPage
                 .open()
@@ -86,10 +77,5 @@ public class OrderingScooter {
                 .clickConfirmationButton();
 
         assertTrue("Нет сообщения 'Заказ оформлен'", successfulOrderModal.checkSuccessHeaderModalExists());
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
     }
 }

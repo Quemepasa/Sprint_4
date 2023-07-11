@@ -34,7 +34,7 @@ public class OrderingScooter {
     }
 
     @Parameterized.Parameters
-    public static Object[][] getPositionOfOrderButton() {
+    public static Object[][] getTestData() {
         BrowserRule browserRule = new BrowserRule();
         MainPage mainPage = new MainPage(browserRule.getWebDriver());
         return new Object[][]{

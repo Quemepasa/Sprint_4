@@ -5,12 +5,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static ru.praktikum.scooter.constants.Urls.MAIN_PAGE_URL;
+import static ru.praktikum.scooter.constants.Urls.MAIN_PAGE_YANDEX_SCOOTER_URL;
 
 public class MainPage {
     private final WebDriver driver;
 
+    private final By logoYandex = By.xpath(".//img[@alt='Yandex']");
     private final By logoScooter = By.xpath(".//img[@alt='Scooter']");
     private final By titleScooter = By.xpath(".//div[contains(text(),'Самокат')]");
     private final By costQuestionButton = By.xpath(".//div[contains(text(),'Сколько это стоит')]");
@@ -109,7 +109,12 @@ public class MainPage {
     }
 
     public MainPage open() {
-        driver.get(MAIN_PAGE_URL);
+        driver.get(MAIN_PAGE_YANDEX_SCOOTER_URL);
+        return this;
+    }
+
+    public MainPage clickLogoYandex() {
+        driver.findElement(logoYandex).click();
         return this;
     }
 

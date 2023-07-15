@@ -11,6 +11,8 @@ import static ru.praktikum.scooter.constants.Urls.MAIN_PAGE_URL;
 public class MainPage {
     private final WebDriver driver;
 
+    private final By logoScooter = By.xpath(".//img[@alt='Scooter']");
+    private final By titleScooter = By.xpath(".//div[contains(text(),'Самокат')]");
     private final By costQuestionButton = By.xpath(".//div[contains(text(),'Сколько это стоит')]");
     private final By costAnswerDescription = By.xpath(".//p[contains(text(),'Сутки')]");
     private final By severalScootersQuestionButton = By.xpath(".//div[contains(text(),'Хочу')]");
@@ -109,6 +111,15 @@ public class MainPage {
     public MainPage open() {
         driver.get(MAIN_PAGE_URL);
         return this;
+    }
+
+    public MainPage clickLogoScooter() {
+        driver.findElement(logoScooter).click();
+        return this;
+    }
+
+    public boolean checkTitleScooterIsDisplayed() {
+        return driver.findElement(titleScooter).isDisplayed();
     }
 
     public MainPage scrollToElement(By element) {

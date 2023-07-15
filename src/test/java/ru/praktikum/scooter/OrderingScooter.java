@@ -76,6 +76,6 @@ public class OrderingScooter {
         confirmationModal
                 .clickConfirmationButton();
 
-        assertTrue("Нет сообщения 'Заказ оформлен'", successfulOrderModal.checkSuccessHeaderModalExists());
+        assertTrue("There is no 'Заказ оформлен' message", successfulOrderModal.checkSuccessHeaderModalExists());
     }
 }
